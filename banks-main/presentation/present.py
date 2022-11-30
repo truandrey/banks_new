@@ -3,7 +3,7 @@ from pptx.util import Inches
 from datetime import date
 
 def createPresentation():
-    # Инициализация презентации формата pptx
+    # Инициализация презентации формата *.pptx
     ppt = Presentation()
 
     # Создание титульного слайда
