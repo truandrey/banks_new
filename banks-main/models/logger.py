@@ -14,15 +14,16 @@ class Logger:
         self.bankmap[name].append(timestamp)
     
     def makeFile(self):
-        # СОздание файла с отчетом в виде csv таблицы
+        # Создание файла с отчетом в виде csv таблицы
         self.df.to_csv('reviews/my_csv.csv', mode='w', header=True)
 
     def writeInfo(self, start_time, end_time) -> pd.DataFrame:
+        #Запись времени работы и времени отказа сервиса
         uptimes = {}
         downtimes = {}
         for key, value in self.bankmap.items():
             if len(value) % 2:
-                # Добавление четного таймстжмпа, завершающего промежуток времени работы ресурса
+                # Добавление четного таймстжэпа, завершающего промежуток времени работы ресурса
                 value.append(end_time)
 
             # Подсчет общего времени доступности ресурса
@@ -31,10 +32,10 @@ class Logger:
                 total += (value[i + 1] - value[i]).total_seconds() + (value[0] - start_time).total_seconds()
             time_passed = (end_time - start_time).total_seconds()
 
-            # Время недоступности ресурса в секундах
             downtimes[key] = abs(round(time_passed - total, 1))
-            # Время доступности ресурс,а разеленное на время работы программы
+             # Время недоступности ресурса в секундах
             uptimes[key] = round((total/time_passed)*100, 2)
+             # Время доступности ресурса в процентах
         
         # Добавление строк в модель
         for key, value in self.bankmap.items():
